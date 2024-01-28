@@ -13,8 +13,8 @@ KensaJs is a lightweight testing library designed for JavaScript and TypeScript,
 ## Installation
 
 ```bash
-npm install kensajs
-
+npm install kensa.js
+```
 Usage
 
 Provide basic usage instructions.

@@ -1,0 +1,9 @@
+src/
+node_modules/
+.gitignore
+.npmrc
+test/
+tsconfig.json
+.prettierrc.json
+.vscode
+.eslintrc.json

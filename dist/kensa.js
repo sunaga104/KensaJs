@@ -1,4 +1,6 @@
-export default function Kensa() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function Kensa() {
     let errors = [];
     function title(msg) {
         console.log('📄', boid(msg));
@@ -23,6 +25,7 @@ export default function Kensa() {
         test,
     };
 }
+exports.default = Kensa;
 function boid(msg) {
     return `\x1b[1m${msg}\x1b[22m`;
 }

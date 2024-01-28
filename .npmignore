@@ -1,9 +1,11 @@
-src/
-node_modules/
+.vscode
+node_modules
+src
 .gitignore
+.npmignore
 .npmrc
-test/
+package-lock.json
 tsconfig.json
 .prettierrc.json
-.vscode
 .eslintrc.json
+tsconfig.tsbuildinfo

@@ -3,21 +3,17 @@
   "version": "0.0.1",
   "description": "A Simple and Intuitive JavaScript Testing Library",
   "main": "dist/index.js",
-  "devDependencies": {
-    "ts-node": "^10.9.2",
-    "tsc-alias": "^1.8.8",
-    "typescript": "^5.3.3"
-  },
-  "files": [
-    "dist/**/*"
-  ],
   "scripts": {
     "dev": "ts-node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && tsc-alias",
+    "build": "tsc",
     "kensa": "node dist/index.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "t.sunaga",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
 }

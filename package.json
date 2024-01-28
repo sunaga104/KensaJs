@@ -1,6 +1,6 @@
 {
-  "name": "kensajs",
-  "version": "0.0.2",
+  "name": "kensa.js",
+  "version": "0.0.1",
   "description": "A Simple and Intuitive JavaScript Testing Library",
   "main": "dist/index.js",
   "scripts": {
@@ -15,5 +15,8 @@
     "@types/node": "^20.11.8",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "bin": {
+    "kensa": "./dist/index.js"
   }
 }

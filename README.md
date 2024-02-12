@@ -16,6 +16,13 @@ KensaJs is a lightweight testing library designed for JavaScript and TypeScript,
 npm install kensajs
 ```
 Usage
+Add the following to your package.json scripts:
+
+```json
+"test": "kensa"
+```
+
+Create a .ks.js or .ks.ts file.
 
 ```typescript
 import Kensa from "kensajs";
@@ -30,6 +37,17 @@ kensa.test({
     expect: 2,
 });
 
+kensa.test({
+    title: '1+2',
+    func: 1 + 2,
+    expect: 2,
+});
+```
+
+```bash
+📄 Sample test
+✓ 1+1
+✗ 1+2  (result: 3, expected: 2)
 ```
 
 License

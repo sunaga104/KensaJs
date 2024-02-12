@@ -1,8 +1,9 @@
 {
   "name": "kensajs",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "description": "A Simple and Intuitive JavaScript Testing Library",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "tsc",

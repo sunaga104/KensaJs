@@ -6,23 +6,32 @@ KensaJs is a lightweight testing library designed for JavaScript and TypeScript,
 
 - **Intuitive:** Inspired by frameworks like Jest and Mocha, yet offering a unique, intuitive interface.
 - **Efficient:** Streamlines file detection and test execution in Node.js environments.
-- **Automated:** Automatically handles `.kj.ts` test files.
+- **Automated:** Automatically handles `.ks.ts` test files.
 - **Flexible:** Provides powerful and flexible assertion tools, with customizable plugins.
 - **Beta Release:** Currently offered as a beta version, with plans for future feature expansion.
 
 ## Installation
 
 ```bash
-npm install KensaJs
+npm install kensajs
 ```
 Usage
 
-Provide basic usage instructions.
+```typescript
+import Kensa from "kensajs";
 
-// Your test code here
+const kensa = Kensa();
+
+kensa.title('Sample test');
+
+kensa.test({
+    title: '1+1',
+    func: 1 + 1,
+    expect: 2,
+});
+
+```
 
 License
 
 KensaJs is released under the ISC License.
-
-This Markdown template is optimized for use as a GitHub README, concisely summarizing the key features and essential information about KensaJs. Place it in the `README.md` file in the root directory of your project for a clean and informative display on GitHub.

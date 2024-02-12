@@ -1,22 +1,37 @@
+/**
+ * KensaJs main function
+ * @example
+ * const kensa = Kensa();
+ * kensa.title('Sample test');
+ * @returns
+ */
 export default function Kensa() {
   let errors: any[] = [];
   function title(msg: string) {
     console.log('📄', boid(msg));
   }
-  function test(msg: string, func: any, expected: any) {
+  function test({
+    title,
+    func,
+    expect,
+  }: {
+    title: string;
+    func: any;
+    expect: any;
+  }) {
     errors = [];
     try {
-      if (func !== expected) {
+      if (func !== expect) {
         console.log(
           boid(red('✗')),
-          msg,
-          ` (result: ${red(func)}, expected: ${yellow(expected)})`
+          title,
+          ` (result: ${red(func)}, expected: ${yellow(expect)})`
         );
       } else {
-        console.log(boid(green('✓')), msg);
+        console.log(boid(green('✓')), title);
       }
     } catch (e) {
-      console.log(boid(red('✗')), msg);
+      console.log(boid(red('✗')), title);
       errors.push(e);
     }
   }

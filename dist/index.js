@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -5,8 +6,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fileLoad_1 = require("./fileLoad");
 const path_1 = __importDefault(require("path"));
-// find all files that end with `.kj.ts` in the current directory
-const testFiles = (0, fileLoad_1.findTestFiles)('./', /\.ks\.(ts|js)$/);
+// find all files that end with `.ks.ts` in the current directory
+const basePath = path_1.default.resolve(__dirname, '../');
+console.log(basePath);
+const testFiles = (0, fileLoad_1.findTestFiles)(basePath, /\.ks\.(ts|js)$/);
 console.log(testFiles);
 // execute all test files
 testFiles.forEach((file) => {

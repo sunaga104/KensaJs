@@ -1,22 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * KensaJs main function
+ * @example
+ * const kensa = Kensa();
+ * kensa.title('Sample test');
+ * @returns
+ */
 function Kensa() {
     let errors = [];
     function title(msg) {
         console.log('📄', boid(msg));
     }
-    function test(msg, func, expected) {
+    function test({ title, func, expect, }) {
         errors = [];
         try {
-            if (func !== expected) {
-                console.log(boid(red('✗')), msg, ` (result: ${red(func)}, expected: ${yellow(expected)})`);
+            if (func !== expect) {
+                console.log(boid(red('✗')), title, ` (result: ${red(func)}, expected: ${yellow(expect)})`);
             }
             else {
-                console.log(boid(green('✓')), msg);
+                console.log(boid(green('✓')), title);
             }
         }
         catch (e) {
-            console.log(boid(red('✗')), msg);
+            console.log(boid(red('✗')), title);
             errors.push(e);
         }
     }

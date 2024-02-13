@@ -1,13 +1,13 @@
 {
   "name": "kensajs",
-  "version": "0.1.1",
+  "version": "0.1.9",
   "description": "A Simple and Intuitive JavaScript Testing Library",
-  "main": "dist/index.js",
+  "main": "./index.js",
   "type": "module",
   "keywords": [],
   "author": "t.sunaga",
   "license": "ISC",
   "bin": {
-    "kensa": "./dist/index.js"
+    "kensa": "./runTests.js"
   }
 }

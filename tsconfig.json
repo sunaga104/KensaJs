@@ -104,6 +104,9 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "declaration": true, // 型定義ファイルの生成を有効にする
+    "declarationMap": true,  // 型定義ファイルのソースマップを生成する（オプション）
+    "sourceMap": true,  // ソースマップの生成を有効にする（オプション）
   }
 }

@@ -20,24 +20,6 @@ export function findTestFiles(dir, pattern) {
     });
     return results;
 }
-// find all files that end with `.ks.ts` or `.ks.js` in the current directory
-// 引数からベースパスを取得する（引数が提供されない場合はカレントディレクトリを使用）
-const basePath = process.argv[2] ? path.resolve(process.argv[2]) : process.cwd();
-console.log(`Searching for .ks.(ts|js) files in: ${basePath}`);
-const testFiles = findTestFiles(basePath, /\.ks\.(ts|js)$/);
-console.log(testFiles);
-// execute all test files
-(async () => {
-    for (const file of testFiles) {
-        try {
-            console.log(`Importing test file: ${file}`);
-            await import(file);
-        }
-        catch (error) {
-            console.error(`Failed to import ${file}`, error);
-        }
-    }
-})();
 /**
  * KensaJs main function
  * @example
@@ -50,7 +32,10 @@ export default function Kensa() {
     function title(msg) {
         console.log('📄', bold(msg));
     }
-    function test({ title, func, expect }) {
+    function msg(msg) {
+        console.log(bold(msg));
+    }
+    function test({ title, func, expect, }) {
         errors = [];
         try {
             if (func !== expect) {
@@ -67,6 +52,7 @@ export default function Kensa() {
     }
     return {
         title,
+        msg,
         test,
     };
 }
@@ -82,3 +68,24 @@ function red(msg) {
 function yellow(msg) {
     return `\x1b[33m${msg}\x1b[39m`;
 }
+// main
+// find all files that end with `.ks.ts` or `.ks.js` in the current directory
+const basePath = process.argv[2]
+    ? path.resolve(process.argv[2])
+    : process.cwd();
+console.log(`Searching for .ks.(ts|js) files in: ${basePath}`);
+const testFiles = findTestFiles(basePath, /\.ks\.(ts|js)$/);
+console.log(testFiles);
+// execute all test files
+(async () => {
+    for (const file of testFiles) {
+        try {
+            console.log(`Importing test file: ${file}`);
+            await import(file);
+        }
+        catch (error) {
+            console.error(`Failed to import ${file}`, error);
+        }
+    }
+})();
+//# sourceMappingURL=index.js.map

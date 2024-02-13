@@ -9,3 +9,5 @@ tsconfig.json
 .prettierrc.json
 .eslintrc.json
 tsconfig.tsbuildinfo
+prepare-package-json.js
+package.json

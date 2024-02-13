@@ -1,54 +1,99 @@
 # KensaJs
 
-KensaJs is a lightweight testing library designed for JavaScript and TypeScript, aimed at simplifying and optimizing the testing process.
+KensaJs is a testing library that prioritizes simplicity, lightness, and ease of use.
 
 ## Features
 
-- **Intuitive:** Inspired by frameworks like Jest and Mocha, yet offering a unique, intuitive interface.
-- **Efficient:** Streamlines file detection and test execution in Node.js environments.
+- **Simple:** Designed with simplicity in mind, making it easy to write and run tests.
+- **Versatile:** Supports testing with regular `.js` and `.ts` files, allowing for runtime testing.
 - **Automated:** Automatically handles `.ks.ts` test files.
-- **Flexible:** Provides powerful and flexible assertion tools, with customizable plugins.
-- **Beta Release:** Currently offered as a beta version, with plans for future feature expansion.
+
 
 ## Installation
 
 ```bash
 npm install kensajs
 ```
-Usage
+## Usage
+
+Import and use Kensa from kensajs.
+
+example
+```typescript
+// testFunction.ts
+import Kensa from "kensajs";
+
+const testFunction = (a:number, b:number)=>{
+  return a + b
+}
+
+const ks = Kensa();
+
+ks.title('testFunction test');
+
+// success
+ks.test({
+  title: 'testFunction(1,1) = 2',
+  func: testFunction(1,1),
+  expect: 2,
+});
+
+// failure
+ks.test({
+  title: 'testFunction(1,2) = 2',
+  func: testFunction(1,2),
+  expect: 2,
+});
+```
+
+```bash
+📄 Sample test
+✓ testFunction(1,1)
+✗ testFunction(1,2)  (result: 3, expected: 2)
+```
+
+### Automated
+
 Add the following to your package.json scripts:
 
 ```json
 "test": "kensa"
 ```
 
-Create a .ks.js or .ks.ts file.
+Create a .ks.js or .ks.ts file. These files are where you'll write your tests. KensaJs will automatically detect and run these tests when you execute the "test" script.
 
 ```typescript
+// testFunction.ks.ts
 import Kensa from "kensajs";
+import {testFunction} from './testFunction.ts'
 
-const kensa = Kensa();
+const ks = Kensa();
 
-kensa.title('Sample test');
+ks.title('testFunction test');
 
-kensa.test({
-    title: '1+1',
-    func: 1 + 1,
-    expect: 2,
+// success
+ks.test({
+  title: 'testFunction(1,1) = 2',
+  func: testFunction(1,1),
+  expect: 2,
 });
 
-kensa.test({
-    title: '1+2',
-    func: 1 + 2,
-    expect: 2,
+// failure
+ks.test({
+  title: 'testFunction(1,2) = 2',
+  func: testFunction(1,2),
+  expect: 2,
 });
 ```
 
 ```bash
+> npm run test
+
 📄 Sample test
-✓ 1+1
-✗ 1+2  (result: 3, expected: 2)
+✓ testFunction(1,1)
+✗ testFunction(1,2)  (result: 3, expected: 2)
 ```
+
 
 License
 

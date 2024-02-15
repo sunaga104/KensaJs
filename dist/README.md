@@ -6,7 +6,7 @@ KensaJs is a testing library that prioritizes simplicity, lightness, and ease of
 
 - **Simple:** Designed with simplicity in mind, making it easy to write and run tests.
 - **Versatile:** Supports testing with regular `.js` and `.ts` files, allowing for runtime testing.
-- **Automated:** Automatically handles `.ks.ts` test files.
+- **Automated:** Automatically handles `.ks.js` test files.Please note that support for `.ks.ts` files is currently under development.
 
 
 ## Installation
@@ -21,6 +21,7 @@ Import and use Kensa from kensajs.
 example
 ```typescript
 // Example test file
+// require or import
 import Kensa from 'kensajs';
 
 // Define your functions
@@ -76,6 +77,7 @@ const errorTestFunction = () => {
   throw new Error('Test error');
 };
 
+const ks = Kensa();
 // Test a synchronous function
 ks.test({
   title: 'Synchronous Test Example',
@@ -117,6 +119,7 @@ const asyncTestFunction = async () => {
   );
 };
 
+const ks = Kensa();
 const testing = async () => {
   // Test an asynchronous function
   await ks.test({
@@ -185,3 +188,5 @@ ks.test({
 License
 
 KensaJs is released under the ISC License.
+
+KensaJs is currently in a test release phase. It may contain bugs. 

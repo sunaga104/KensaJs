@@ -8,22 +8,29 @@ const basePath: string = process.argv[2]
   ? path.resolve(process.argv[2])
   : process.cwd();
 console.log(`Searching for .ks.(ts|js) files in: ${basePath}`);
-const testFiles: string[] = findTestFiles(basePath, /\.ks\.(ts|js)$/);
+const testFiles: string[] = findTestFiles(basePath, /\.ks\.(js)$/);
 console.log(testFiles);
 
 // execute all test files
-(async () => {
-  for (const file of testFiles) {
-    try {
-      console.log(`Importing test file: ${file}`);
-      const url = pathToFileURL(file); // convert path to file:// URL
-      await import(url.href);
-    } catch (error) {
-      console.error(`Failed to import ${file}`, error);
-    }
+// (async () => {
+//   for (const file of testFiles) {
+//     try {
+//       console.log(`Importing test file: ${file}`);
+//       const url = pathToFileURL(file); // convert path to file:// URL
+//       await import(url.href);
+//     } catch (error) {
+//       console.error(`Failed to import ${file}`, error);
+//     }
+//   }
+// })();
+testFiles.forEach((file) => {
+  try {
+    console.log(`Importing test file: ${file}`);
+    require(file); // Use require to load and execute the JS file
+  } catch (error) {
+    console.error(`Failed to import ${file}`, error);
   }
-})();
-
+});
 /**
  * find all files in a directory that match a pattern
  * @param dir target directory

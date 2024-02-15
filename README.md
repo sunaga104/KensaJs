@@ -76,6 +76,7 @@ const errorTestFunction = () => {
   throw new Error('Test error');
 };
 
+const ks = Kensa();
 // Test a synchronous function
 ks.test({
   title: 'Synchronous Test Example',
@@ -117,6 +118,7 @@ const asyncTestFunction = async () => {
   );
 };
 
+const ks = Kensa();
 const testing = async () => {
   // Test an asynchronous function
   await ks.test({

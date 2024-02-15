@@ -1,15 +1,15 @@
 {
   "name": "kensajs",
-  "version": "0.1.8",
+  "version": "0.3.0",
   "description": "A Simple and Intuitive JavaScript Testing Library",
   "main": "./index.js",
   "type": "module",
   "scripts": {
     "dev": "ts-node --loader ts-node/esm src/runTests.ts",
     "build": "tsc",
-    "kensa": "node dist/runTests.js",
-    "prepare-package": "node prepare-package-json.js",
-    "test": "kensa"
+    "test": "node example/test.js",
+    "test:Auto": "node dist/runTests.js",
+    "prepare-package": "node prepare-package-json.js"
   },
   "keywords": [],
   "author": "t.sunaga",

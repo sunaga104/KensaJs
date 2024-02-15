@@ -20,36 +20,123 @@ Import and use Kensa from kensajs.
 
 example
 ```typescript
-// testFunction.ts
-import Kensa from "kensajs";
+// Example test file
+import Kensa from 'kensajs';
 
-const testFunction = (a:number, b:number)=>{
-  return a + b
-}
+// Define your functions
+const testFunction = (a, b) => a + b;
 
+// Create a new instance of Kensa
 const ks = Kensa();
+ks.title('Sample');
 
-ks.title('testFunction test');
+// simple message
+ks.msg('success');
 
-// success
+// Test a simple value
 ks.test({
-  title: 'testFunction(1,1) = 2',
-  func: testFunction(1,1),
+  title: 'Simple Value Test',
+  input: testFunction(1, 1),
   expect: 2,
 });
 
+// simple message
+ks.msg('failure');
+
 // failure
 ks.test({
-  title: 'testFunction(1,2) = 2',
-  func: testFunction(1,2),
+  title: 'failure test Function(1,2) = 2',
+  input: testFunction(1,2),
   expect: 2,
 });
 ```
 
 ```bash
 📄 Sample test
-✓ testFunction(1,1)
-✗ testFunction(1,2)  (result: 3, expected: 2)
+success
+✓ Simple Value Test
+failure
+✗ failure test Function(1,2) = 2  (result: undefined, expected: 2)
+```
+
+Supports testing of functions, asynchronous functions, and error handling.
+
+```typescript
+import Kensa from 'kensajs';
+
+const testFunction = (a, b) => a + b;
+
+const asyncTestFunction = async () => {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve('async result'), 100)
+  );
+};
+
+const errorTestFunction = () => {
+  throw new Error('Test error');
+};
+
+// Test a synchronous function
+ks.test({
+  title: 'Synchronous Test Example',
+  input: () => testFunction(2, 2),
+  expect: 4,
+});
+
+// Test an asynchronous function
+ks.test({
+  title: 'Asynchronous Test Example',
+  input: asyncTestFunction,
+  expect: 'async result',
+});
+
+// Test expecting an error to be thrown
+ks.test({
+  title: 'Error Expectation Test',
+  input: errorTestFunction,
+  expect: new Error('Test error'),
+});
+```
+
+```bash
+✓ Error Expectation Test
+✓ Synchronous Test Example
+✓ Asynchronous Test Example
+```
+
+However, when including asynchronous functions, the order may change, so if you need to maintain order, you must wait with await.
+
+```typescript
+import Kensa from 'kensajs';
+
+const testFunction = (a, b) => a + b;
+
+const asyncTestFunction = async () => {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve('async result'), 100)
+  );
+};
+
+const testing = async () => {
+  // Test an asynchronous function
+  await ks.test({
+    title: 'Asynchronous Test Example',
+    input: asyncTestFunction,
+    expect: 'async result',
+  });
+  // Test a synchronous function
+  ks.test({
+    title: 'Synchronous Test Example',
+    input: () => testFunction(2, 2),
+    expect: 4,
+  });
+};
+testing()
+```
+
+```bash
+✓ Asynchronous Test Example
+✓ Synchronous Test Example
 ```
 
 ### Automated
@@ -74,14 +161,14 @@ ks.title('testFunction test');
 // success
 ks.test({
   title: 'testFunction(1,1) = 2',
-  func: testFunction(1,1),
+  input: testFunction(1,1),
   expect: 2,
 });
 
 // failure
 ks.test({
   title: 'testFunction(1,2) = 2',
-  func: testFunction(1,2),
+  input: testFunction(1,2),
   expect: 2,
 });
 ```

@@ -29,26 +29,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const fs = __importStar(require("fs"));
+let tsNodeAvailable = false;
+try {
+    require.resolve('ts-node');
+    tsNodeAvailable = true;
+    require('ts-node').register();
+}
+catch (error) {
+    console.log('`ts-node` is not installed. Proceeding with JavaScript files only.');
+}
 // find all files that end with `.ks.ts` or `.ks.js` in the current directory
 const basePath = process.argv[2]
     ? path_1.default.resolve(process.argv[2])
     : process.cwd();
-console.log(`Searching for .ks.(js) files in: ${basePath}`);
-const testFiles = findTestFiles(basePath, /\.ks\.(js)$/);
+console.log(`Searching for .ks.(ts|js) files in: ${basePath}`);
+const filePattern = tsNodeAvailable ? /\.ks\.(ts|js)$/ : /\.ks\.js$/;
+const testFiles = findTestFiles(basePath, filePattern);
 console.log(testFiles);
-// execute all test files
-// (async () => {
-//   for (const file of testFiles) {
-//     try {
-//       console.log(`Importing test file: ${file}`);
-//       const url = pathToFileURL(file); // convert path to file:// URL
-//       await import(url.href);
-//     } catch (error) {
-//       console.error(`Failed to import ${file}`, error);
-//     }
-//   }
-// })();
-testFiles.forEach((file) => {
+testFiles.forEach((file, index) => {
+    if (index > 0) {
+        console.log(); // 空行を出力
+    }
     try {
         console.log(`Importing test file: ${file}`);
         require(file); // Use require to load and execute the JS file

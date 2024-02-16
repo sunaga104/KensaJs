@@ -1,39 +1,71 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-console.log('test.ks.js');
-const index_js_1 = __importDefault(require("../dist/index.js"));
-const ks = (0, index_js_1.default)();
-ks.title('Sample');
+console.log('test.js');
+
+const Kensa = require('../dist/index').default;
+
 const testFunction = (a, b) => a + b;
+const asyncTestFunction = async () => {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve('async result'), 100)
+  );
+};
+const errorTestFunction = () => {
+  throw new Error('Test error');
+};
+
+const ks = Kensa();
+ks.title('Sample');
+
+ks.msg('success');
 // Test with a simple value
 ks.test({
-    title: 'Simple Value Test',
-    input: testFunction(1, 1),
-    expect: 2,
+  title: 'Simple Value Test',
+  input: testFunction(1, 1),
+  expect: 2,
 });
+
 // Test a synchronous function
 ks.test({
-    title: 'Synchronous Test Example',
-    input: () => 2 + 2,
-    expect: 4,
+  title: 'Synchronous Test Example',
+  input: () => {
+    return testFunction(2, 2);
+  },
+  expect: 4,
 });
+
 // Test an asynchronous function
 ks.test({
-    title: 'Asynchronous Test Example',
-    input: async () => {
-        return new Promise((resolve) => setTimeout(() => resolve('async result'), 100));
-    },
-    expect: 'async result',
+  title: 'Asynchronous Test Example',
+  input: asyncTestFunction,
+  expect: 'async result',
 });
+
 // Test expecting an error to be thrown
 ks.test({
-    title: 'Error Expectation Test',
-    input: () => {
-        throw new Error('Test error');
-    },
-    expect: new Error('Test error'),
+  title: 'Error Expectation Test',
+  input: errorTestFunction,
+  expect: new Error('Test error'),
 });
-//# sourceMappingURL=test.ks.js.map
+ks.msg('failure');
+
+ks.test({
+  title: 'failure test Function(1,2) = 2',
+  func: testFunction(1, 2),
+  expect: 2,
+});
+
+const testing = async () => {
+  // Test an asynchronous function
+  await ks.test({
+    title: 'Asynchronous Test Example',
+    input: asyncTestFunction,
+    expect: 'async result',
+  });
+  // Test a synchronous function
+  ks.test({
+    title: 'Synchronous Test Example',
+    input: () => testFunction(2, 2),
+    expect: 4,
+  });
+};
+
+testing();

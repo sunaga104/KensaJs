@@ -6,7 +6,7 @@ KensaJs is a testing library that prioritizes simplicity, lightness, and ease of
 
 - **Simple:** Designed with simplicity in mind, making it easy to write and run tests.
 - **Versatile:** Supports testing with regular `.js` and `.ts` files, allowing for runtime testing.
-- **Automated:** Automatically handles `.ks.js` test files.Please note that support for `.ks.ts` files is currently under development.
+- **Automated:** Automatically handles `.ks.js | .ks.ts` test files.
 
 
 ## Installation
@@ -151,6 +151,8 @@ Add the following to your package.json scripts:
 ```
 
 Create a .ks.js or .ks.ts file. These files are where you'll write your tests. KensaJs will automatically detect and run these tests when you execute the "test" script.
+If you are running `.ks.ts` files, please install `ts-node`.
+
 
 ```typescript
 // testFunction.ks.ts

@@ -1,6 +1,6 @@
 {
   "name": "kensajs",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "A Simple and Intuitive JavaScript Testing Library",
   "main": "./src/index.js",
   "scripts": {
@@ -16,14 +16,14 @@
     "publish": "cd dist && npm publish",
     "example1": "ts-node example/basic1.ts",
     "example2": "ts-node example/basic2.ts",
-    "example3": "ts-node example/multipleTests.ts"
+    "example3": "ts-node example/multiple.ts"
   },
   "keywords": [],
   "author": "t.sunaga",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.8",
-    "kensajs": "^0.3.5",
+    "kensajs": "^0.3.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },

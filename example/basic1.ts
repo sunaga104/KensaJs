@@ -1,8 +1,8 @@
 // basic1.ts
 import Kensa from 'kensajs';
 
-const testFunction = (a: number, b: number) => a + b;
-const ks = Kensa('Basic test');
+const testFunction = (a:number, b:number) => a + b;
+const ks = Kensa('Basic1 test');
 
 ks.test({
   title: 'Simple Test (success)',

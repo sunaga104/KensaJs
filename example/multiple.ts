@@ -1,3 +1,4 @@
+// multiple.ts
 import Kensa from 'kensajs';
 
 const testFunction = () => 4;
@@ -27,6 +28,7 @@ ks.test({
 
 const runner1 = ks.getRunner();
 
+// Prepare a second test set
 ks = Kensa('Advanced Test2');
 
 ks.test({
@@ -42,4 +44,5 @@ ks.test({
 
 const runner2 = ks.getRunner();
 
+// Execute multiple test runners collectively
 ks.run([runner1, runner2]);

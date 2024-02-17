@@ -31,7 +31,6 @@ example
 // basic1.ts
 import Kensa from 'kensajs';
 
-
 const testFunction = (a:number, b:number) => a + b;
 const ks = Kensa('Basic1 test');
 

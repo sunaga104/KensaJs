@@ -55,4 +55,4 @@ ks.test({
   expect: 2,
 });
 
-exports.result1 = ks.builder();
+exports.result1 = ks.run();

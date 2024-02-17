@@ -1,3 +1,4 @@
+// automated.ks.ts
 import Kensa from 'kensajs';
 
 let ks = Kensa('automated Test1');

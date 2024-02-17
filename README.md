@@ -229,4 +229,4 @@ test file: path\automated.ks.ts
 ```
 
 ### License
-KensaJs is open source software released under the ISC License. For the full license text, please see the [LICENSE](https://github.com/sunaga104/KensaJs/LICENSE) file in our GitHub repository.
+KensaJs is open source software released under the ISC License. For the full license text, please see the [LICENSE](https://github.com/sunaga104/KensaJs/blob/main/LICENSE) file in our GitHub repository.

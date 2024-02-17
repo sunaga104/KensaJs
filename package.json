@@ -23,7 +23,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.8",
-    "kensajs": "^0.3.6",
+    "kensajs": "^0.3.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },

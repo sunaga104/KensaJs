@@ -68,21 +68,18 @@ const errorTestFunction = () => {
 
 const ks = Kensa('Basic2 Test');
 
-// Test a synchronous function
 ks.test({
   title: 'Synchronous Test',
   input: testFunction,
   expect: 4,
 });
 
-// Test an asynchronous function
 ks.test({
   title: 'Asynchronous Test',
   input: asyncTestFunction,
   expect: 'async result',
 });
 
-// Test expecting an error to be thrown
 ks.test({
   title: 'Error Expectation Test',
   input: errorTestFunction,
@@ -119,7 +116,7 @@ const errorTestFunction = () => {
   throw new Error('Test error');
 };
 
-let ks = Kensa('Advanced Test1');
+let ks = Kensa('multiple Test1');
 
 ks.test({
   title: 'Synchronous Test1',
@@ -135,7 +132,7 @@ ks.test({
 const runner1 = ks.getRunner();
 
 // Prepare a second test set
-ks = Kensa('Advanced Test2');
+ks = Kensa('multiple Test2');
 
 ks.test({
     title: 'Synchronous Test2',
@@ -156,12 +153,12 @@ ks.run([runner1, runner2]);
 ```
   
 ```bash
-📄 Advanced Test1
+📄 multiple Test1
 ✓ Synchronous Test1
 ✓ Asynchronous Test1
 
 ------------------------------------------
-📄 Advanced Test2
+📄 multiple Test2
 ✓ Synchronous Test2
 ✓ Asynchronous Test2
 ```
@@ -189,12 +186,14 @@ npm install ts-node --save-dev
 // automated.ks.ts
 import Kensa from 'kensajs';
 
+const testFunction = (a:number, b:number) => a + b;
+
 let ks = Kensa('automated Test1');
 
 ks.test({
   title: 'Simple Test',
-  input: () => 5,
-  expect: 5,
+  input: testFunction(2, 4),
+  expect: 6,
 });
 
 const runner1 = ks.getRunner();
@@ -203,7 +202,7 @@ ks = Kensa('automated Test2');
 
 ks.test({
   title: 'Simple Test',
-  input: () => 5,
+  input: testFunction(2, 3),
   expect: 5,
 });
 

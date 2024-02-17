@@ -1,5 +1,2 @@
-export declare function bold(msg: string): string;
-export declare function green(msg: string): string;
-export declare function red(msg: string): string;
-export declare function yellow(msg: string): string;
+export declare function logStyle(msg: string): any;
 //# sourceMappingURL=style.d.ts.map

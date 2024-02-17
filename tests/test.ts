@@ -46,12 +46,6 @@ ks.test({
   expect: 4,
 });
 
-ks.test({
-  title: '7,failure test Function(1,2) = 2',
-  input: testFunction(1, 2),
-  expect: 2,
-});
-
 const runner1 = ks.getRunner();
 
 // 1.ks.ts test
@@ -97,12 +91,6 @@ ks.test({
   title: '6,Synchronous Test Example',
   input: () => testFunction(2, 2),
   expect: 4,
-});
-
-ks.test({
-  title: '7,failure test Function(1,2) = 2',
-  input: testFunction(1, 2),
-  expect: 2,
 });
 
 const runner2 = ks.getRunner();

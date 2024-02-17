@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const deepEqual_1 = require("./deepEqual");
-const style_1 = require("./style");
+const message_1 = require("./message");
 function test({ title, input, expect, }) {
     return async () => {
         try {
@@ -13,29 +13,37 @@ function test({ title, input, expect, }) {
                 result = input;
             }
             if (expect instanceof Error) {
-                console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (expected error: ${(0, style_1.yellow)(expect.message)}, but got result: ${(0, style_1.red)(String(result))})`);
+                (0, message_1.failureLog)(title, result, expect.message);
+                return false;
             }
             else if (!(0, deepEqual_1.deepEqual)(result, expect)) {
-                console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (result: ${(0, style_1.red)(String(result))}, expected: ${(0, style_1.yellow)(String(expect))})`);
+                (0, message_1.failureLog)(title, result, expect);
+                return false;
             }
             else {
-                console.log((0, style_1.bold)((0, style_1.green)('✓')), title);
+                (0, message_1.successLog)(title);
+                return true;
             }
         }
         catch (e) {
             if (expect instanceof Error && e instanceof Error) {
                 if (e.message === expect.message) {
-                    console.log((0, style_1.bold)((0, style_1.green)('✓')), title);
+                    (0, message_1.successLog)(title);
+                    return true;
                 }
                 else {
-                    console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (result error: ${(0, style_1.red)(e.message)}, expected error: ${(0, style_1.yellow)(expect.message)})`);
+                    (0, message_1.failureLog)(title, e.message, expect.message);
+                    return false;
                 }
             }
             else if (e instanceof Error) {
-                console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (error: ${(0, style_1.red)(e.message)})`);
+                (0, message_1.failureLog)(title, e.message, expect);
+                return false;
             }
             else {
-                console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (error: ${(0, style_1.red)('Unknown error')})`);
+                (0, message_1.failureLog)(title, 'Unknown error', expect);
+                console.log(e);
+                return false;
             }
         }
     };

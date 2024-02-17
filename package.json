@@ -1,6 +1,6 @@
 {
   "name": "kensajs",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "A Simple and Intuitive JavaScript Testing Library",
   "main": "./src/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "test": "npm run test:js & npm run test:ts & npm run kensa",
     "test:js": "node tests/test.js",
     "test:ts": "ts-node tests/test.ts",
-    "kensa": "kensa",
+    "kensa": "node dist/src/runTests.js",
     "prepare-package": "node prepare-package-json.js",
     "publish": "cd dist && npm publish",
     "example1": "ts-node example/basic1.ts",

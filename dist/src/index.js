@@ -13,54 +13,25 @@ const test_1 = __importDefault(require("./test"));
  */
 function Kensa(kensaTitle) {
     let tests = [];
-    /**
-     * Adds a new test to the Kensa suite.
-     *
-     * @param {Object} params - The parameters for the test.
-     * @param {string} params.title - The title of the test.
-     * @param {any} params.input - The test function or value to be tested.
-     * @param {any} params.expect - The expected result of the test.
-     */
     function test({ title, input, expect, }) {
         const testPromise = (0, test_1.default)({ title, input, expect });
         tests.push(testPromise);
     }
-    /**
-     * Runs all tests in the Kensa suite or specified runners if provided.
-     *
-     * @param {Function[]} [runners] - Optional. An array of runner functions to execute instead of the internal test suite.
-     * @returns {Promise<void>} A promise that resolves once all tests have been executed.
-     */
     async function run(runners) {
+        let testResult = true;
         if (runners) {
-            let filstFlg = true;
-            for (const runner of runners) {
-                if (filstFlg) {
-                    filstFlg = false;
-                }
-                else {
-                    console.log();
-                    console.log('------------------------------------------');
-                }
-                await runner();
-            }
+            testResult = await multiTestRun(runners);
+            return testResult;
         }
         else {
-            (0, message_1.callTitle)(kensaTitle);
-            for (const test of tests) {
-                await test();
-            }
+            testResult = await singleTestRun(kensaTitle, tests);
             tests = [];
+            return testResult;
         }
     }
-    /**
-     * Returns a runner function that, when called, runs all tests in the Kensa suite.
-     *
-     * @returns {Function} A function that runs the test suite when invoked.
-     */
     function getRunner() {
         return async () => {
-            await run();
+            return await run();
         };
     }
     return {
@@ -70,4 +41,50 @@ function Kensa(kensaTitle) {
     };
 }
 exports.default = Kensa;
+async function singleTestRun(kensaTitle, tests) {
+    let testResult = true;
+    (0, message_1.callTitle)(kensaTitle);
+    let successCount = 0;
+    let failureCount = 0;
+    const totalCount = tests.length;
+    for (const test of tests) {
+        const result = await test();
+        if (result) {
+            successCount++;
+        }
+        else {
+            failureCount++;
+        }
+    }
+    if (failureCount === 0) {
+        (0, message_1.passLogo)();
+    }
+    else {
+        (0, message_1.failLogo)();
+        testResult = false;
+    }
+    (0, message_1.resultMsg)(totalCount, successCount, failureCount);
+    return testResult;
+}
+async function multiTestRun(runners) {
+    let testResult = true;
+    let successCount = 0;
+    let failureCount = 0;
+    const totalCount = runners.length;
+    for (const runner of runners) {
+        const result = await runner();
+        if (result) {
+            successCount++;
+        }
+        else {
+            failureCount++;
+        }
+        (0, message_1.splitLine)();
+    }
+    (0, message_1.allResultMsg)(totalCount, successCount, failureCount);
+    if (failureCount > 0) {
+        testResult = false;
+    }
+    return testResult;
+}
 //# sourceMappingURL=index.js.map

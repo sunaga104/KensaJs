@@ -2,6 +2,15 @@
 import path from 'path';
 import * as fs from 'fs';
 import { findTestFiles } from './findTestFiles';
+import {
+  allKsTestResultMsg,
+  allResultMsg,
+  decoratLine,
+  decoratLine3,
+  space,
+  splitLine,
+} from './message';
+import { logStyle } from './style';
 
 let tsNodeAvailable = false;
 
@@ -24,36 +33,58 @@ console.log(`Searching for .ks.(ts|js) files in: ${basePath}`);
 const filePattern = tsNodeAvailable ? /\.ks\.(ts|js)$/ : /\.ks\.js$/;
 const testFiles = findTestFiles(basePath, filePattern);
 console.log(testFiles);
-
+logStyle(' start tests ').bgBlue().white().bold().log();
+space();
+space();
+space();
 // run all tests
 const runTests = async (testFiles: string[]) => {
+  let allTestResult = true;
+  let allSuccessCount = 0;
+  let allFailureCount = 0;
+  let allTotalCount = testFiles.length;
   for (let index = 0; index < testFiles.length; index++) {
     const file = testFiles[index];
-    console.log();
-    console.log(
-      '***************************************************************'
-    );
-    console.log(`test file: ${file}`);
-    console.log();
-    console.log(
-      '***************************************************************'
-    );
+    space();
+    console.log(file);
+    logStyle(decoratLine()).bold().log();
     try {
       const test = require(file);
-      let filstFlg = true;
+      let testResult = true;
+      let successCount = 0;
+      let failureCount = 0;
+      let totalCount = 0;
+      let firstTest = true;
       for (const key in test) {
-        if (filstFlg) {
-          filstFlg = false;
+        if (firstTest) {
+          firstTest = false;
         } else {
-          console.log();
-          console.log('------------------------------------------');
+          splitLine();
         }
-        await test[key]();
+        const result = await test[key]();
+        if (result) {
+          successCount++;
+        } else {
+          failureCount++;
+          testResult = false;
+        }
+        totalCount++;
       }
+      if (testResult) {
+        allSuccessCount++;
+      } else {
+        allFailureCount++;
+        allTestResult = false;
+      }
+      allResultMsg(totalCount, successCount, failureCount);
     } catch (error) {
       console.error(`Failed to import ${file}`, error);
+      allFailureCount++;
     }
+    space();
+    space();
   }
+  allKsTestResultMsg(allTotalCount, allSuccessCount, allFailureCount);
 };
 
 runTests(testFiles);

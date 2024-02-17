@@ -1,5 +1,6 @@
 import { deepEqual } from './deepEqual';
-import { bold, green, red, yellow } from './style';
+import { failureLog, successLog } from './message';
+import { logStyle } from './style';
 
 export default function test({
   title,
@@ -19,41 +20,31 @@ export default function test({
         result = input;
       }
       if (expect instanceof Error) {
-        console.log(
-          bold(red('✗')),
-          title,
-          ` (expected error: ${yellow(expect.message)}, but got result: ${red(
-            String(result)
-          )})`
-        );
+        failureLog(title, result, expect.message);
+        return false;
       } else if (!deepEqual(result, expect)) {
-        console.log(
-          bold(red('✗')),
-          title,
-          ` (result: ${red(String(result))}, expected: ${yellow(
-            String(expect)
-          )})`
-        );
+        failureLog(title, result, expect);
+        return false;
       } else {
-        console.log(bold(green('✓')), title);
+        successLog(title);
+        return true;
       }
     } catch (e) {
       if (expect instanceof Error && e instanceof Error) {
         if (e.message === expect.message) {
-          console.log(bold(green('✓')), title);
+          successLog(title);
+          return true;
         } else {
-          console.log(
-            bold(red('✗')),
-            title,
-            ` (result error: ${red(e.message)}, expected error: ${yellow(
-              expect.message
-            )})`
-          );
+          failureLog(title, e.message, expect.message);
+          return false;
         }
       } else if (e instanceof Error) {
-        console.log(bold(red('✗')), title, ` (error: ${red(e.message)})`);
+        failureLog(title, e.message, expect);
+        return false;
       } else {
-        console.log(bold(red('✗')), title, ` (error: ${red('Unknown error')})`);
+        failureLog(title, 'Unknown error', expect);
+        console.log(e);
+        return false;
       }
     }
   };

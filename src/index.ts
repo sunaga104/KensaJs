@@ -1,3 +1,6 @@
+import { deepEqual } from "./deepEqual";
+import { bold, green, red, yellow } from "./style";
+
 /**
  * Creates a new instance of the KensaJs testing framework.
  * This function provides a simple interface for defining and running tests.
@@ -109,53 +112,4 @@ export default function Kensa() {
     msg,
     test,
   };
-}
-
-function deepEqual(object1: any, object2: any): boolean {
-  if (object1 === object2) {
-    return true;
-  }
-
-  if (!isObject(object1) || !isObject(object2)) {
-    return false;
-  }
-
-  const keys1 = Object.keys(object1);
-  const keys2 = Object.keys(object2);
-
-  if (keys1.length !== keys2.length) {
-    return false;
-  }
-
-  for (const key of keys1) {
-    const val1 = object1[key];
-    const val2 = object2[key];
-    const areObjects = isObject(val1) && isObject(val2);
-    if (
-      (areObjects && !deepEqual(val1, val2)) ||
-      (!areObjects && val1 !== val2)
-    ) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function isObject(object: any): object is Object {
-  return object != null && typeof object === 'object';
-}
-
-// Helper functions for styling console logs
-function bold(msg: string): string {
-  return `\x1b[1m${msg}\x1b[22m`;
-}
-function green(msg: string): string {
-  return `\x1b[32m${msg}\x1b[39m`;
-}
-function red(msg: string): string {
-  return `\x1b[31m${msg}\x1b[39m`;
-}
-function yellow(msg: string): string {
-  return `\x1b[33m${msg}\x1b[39m`;
 }

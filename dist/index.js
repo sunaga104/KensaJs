@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const deepEqual_1 = require("./deepEqual");
+const style_1 = require("./style");
 /**
  * Creates a new instance of the KensaJs testing framework.
  * This function provides a simple interface for defining and running tests.
@@ -27,7 +29,7 @@ function Kensa() {
      * @param msg - The title message for the test suite.
      */
     function title(msg) {
-        console.log('📄', bold(msg));
+        console.log('📄', (0, style_1.bold)(msg));
     }
     /**
      * Displays a bold message to the console. Useful for additional information or test results.
@@ -35,7 +37,7 @@ function Kensa() {
      * @param msg - The message to be displayed.
      */
     function msg(msg) {
-        console.log(bold(msg));
+        console.log((0, style_1.bold)(msg));
     }
     /**
      * Asynchronously runs a test with the specified input and expected output.
@@ -59,29 +61,29 @@ function Kensa() {
                 result = input;
             }
             if (expect instanceof Error) {
-                console.log(bold(red('✗')), title, ` (expected error: ${yellow(expect.message)}, but got result: ${red(String(result))})`);
+                console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (expected error: ${(0, style_1.yellow)(expect.message)}, but got result: ${(0, style_1.red)(String(result))})`);
             }
-            else if (!deepEqual(result, expect)) {
-                console.log(bold(red('✗')), title, ` (result: ${red(String(result))}, expected: ${yellow(String(expect))})`);
+            else if (!(0, deepEqual_1.deepEqual)(result, expect)) {
+                console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (result: ${(0, style_1.red)(String(result))}, expected: ${(0, style_1.yellow)(String(expect))})`);
             }
             else {
-                console.log(bold(green('✓')), title);
+                console.log((0, style_1.bold)((0, style_1.green)('✓')), title);
             }
         }
         catch (e) {
             if (expect instanceof Error && e instanceof Error) {
                 if (e.message === expect.message) {
-                    console.log(bold(green('✓')), title);
+                    console.log((0, style_1.bold)((0, style_1.green)('✓')), title);
                 }
                 else {
-                    console.log(bold(red('✗')), title, ` (result error: ${red(e.message)}, expected error: ${yellow(expect.message)})`);
+                    console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (result error: ${(0, style_1.red)(e.message)}, expected error: ${(0, style_1.yellow)(expect.message)})`);
                 }
             }
             else if (e instanceof Error) {
-                console.log(bold(red('✗')), title, ` (error: ${red(e.message)})`);
+                console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (error: ${(0, style_1.red)(e.message)})`);
             }
             else {
-                console.log(bold(red('✗')), title, ` (error: ${red('Unknown error')})`);
+                console.log((0, style_1.bold)((0, style_1.red)('✗')), title, ` (error: ${(0, style_1.red)('Unknown error')})`);
             }
             errors.push(e);
         }
@@ -93,43 +95,4 @@ function Kensa() {
     };
 }
 exports.default = Kensa;
-function deepEqual(object1, object2) {
-    if (object1 === object2) {
-        return true;
-    }
-    if (!isObject(object1) || !isObject(object2)) {
-        return false;
-    }
-    const keys1 = Object.keys(object1);
-    const keys2 = Object.keys(object2);
-    if (keys1.length !== keys2.length) {
-        return false;
-    }
-    for (const key of keys1) {
-        const val1 = object1[key];
-        const val2 = object2[key];
-        const areObjects = isObject(val1) && isObject(val2);
-        if ((areObjects && !deepEqual(val1, val2)) ||
-            (!areObjects && val1 !== val2)) {
-            return false;
-        }
-    }
-    return true;
-}
-function isObject(object) {
-    return object != null && typeof object === 'object';
-}
-// Helper functions for styling console logs
-function bold(msg) {
-    return `\x1b[1m${msg}\x1b[22m`;
-}
-function green(msg) {
-    return `\x1b[32m${msg}\x1b[39m`;
-}
-function red(msg) {
-    return `\x1b[31m${msg}\x1b[39m`;
-}
-function yellow(msg) {
-    return `\x1b[33m${msg}\x1b[39m`;
-}
 //# sourceMappingURL=index.js.map

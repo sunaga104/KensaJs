@@ -1,19 +1,30 @@
-console.log('test.js');
-
 const Kensa = require('../dist/index').default;
 
+// normal function
 const testFunction = (a, b) => a + b;
+// async function
 const asyncTestFunction = async () => {
   return new Promise((resolve) =>
     setTimeout(() => resolve('async result'), 100)
   );
 };
+// throw Error function
 const errorTestFunction = () => {
   throw new Error('Test error');
 };
 
 const ks = Kensa();
-ks.title('Sample');
+ks.title('.js test');
+
+
+ks.msg('failure');
+
+ks.test({
+  title: 'failure test Function(1,2) = 2',
+  input: testFunction(1, 2),
+  expect: 2,
+});
+
 
 ks.msg('success');
 // Test with a simple value
@@ -45,14 +56,6 @@ ks.test({
   input: errorTestFunction,
   expect: new Error('Test error'),
 });
-ks.msg('failure');
-
-ks.test({
-  title: 'failure test Function(1,2) = 2',
-  func: testFunction(1, 2),
-  expect: 2,
-});
-
 const testing = async () => {
   // Test an asynchronous function
   await ks.test({

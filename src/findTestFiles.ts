@@ -1,12 +1,6 @@
 import path from 'path';
 import * as fs from 'fs';
 
-/**
- * find all files in a directory that match a pattern
- * @param dir target directory
- * @param pattern regex pattern to match
- * @returns
- */
 export function findTestFiles(dir: string, pattern: RegExp): string[] {
   let results: string[] = [];
   fs.readdirSync(dir).forEach((file) => {

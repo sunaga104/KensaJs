@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const findTestFiles_1 = require("./findTestFiles");
 let tsNodeAvailable = false;
+// check if ts-node is available
 try {
     require.resolve('ts-node');
     tsNodeAvailable = true;
@@ -23,17 +24,33 @@ console.log(`Searching for .ks.(ts|js) files in: ${basePath}`);
 const filePattern = tsNodeAvailable ? /\.ks\.(ts|js)$/ : /\.ks\.js$/;
 const testFiles = (0, findTestFiles_1.findTestFiles)(basePath, filePattern);
 console.log(testFiles);
-testFiles.forEach((file, index) => {
-    if (index > 0) {
-        console.log(); // 空行を出力
-    }
-    try {
+// run all tests
+const runTests = async (testFiles) => {
+    for (let index = 0; index < testFiles.length; index++) {
+        const file = testFiles[index];
+        console.log();
         console.log('***************************************************************');
         console.log(`test file: ${file}`);
-        require(file); // Use require to load and execute the JS file
+        console.log();
+        console.log('***************************************************************');
+        try {
+            const test = require(file);
+            let filstFlg = true;
+            for (const key in test) {
+                if (filstFlg) {
+                    filstFlg = false;
+                }
+                else {
+                    console.log();
+                    console.log('------------------------------------------');
+                }
+                await test[key]();
+            }
+        }
+        catch (error) {
+            console.error(`Failed to import ${file}`, error);
+        }
     }
-    catch (error) {
-        console.error(`Failed to import ${file}`, error);
-    }
-});
+};
+runTests(testFiles);
 //# sourceMappingURL=runTests.js.map

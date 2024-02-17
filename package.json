@@ -1,26 +1,34 @@
 {
   "name": "kensajs",
-  "version": "0.3.1",
+  "version": "0.3.5",
   "description": "A Simple and Intuitive JavaScript Testing Library",
-  "main": "./index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "dev": "ts-node --loader ts-node/esm src/runTests.ts",
-    "build": "tsc",
-    "test:js": "node example/test.js",
-    "test:ts": "ts-node example/test.ts",
-    "kensa": "node dist/runTests.js",
-    "prepare-package": "node prepare-package-json.js"
+    "dev": "ts-node src/runTests.ts",
+    "clean": "del /Q /F dist",
+    "prebuild": "npm run clean",
+    "build": "tsc && npm run prepare-package && copy README.md dist",
+    "test": "npm run test:js & npm run test:ts & npm run kensa",
+    "test:js": "node tests/test.js",
+    "test:ts": "ts-node tests/test.ts",
+    "kensa": "kensa",
+    "prepare-package": "node prepare-package-json.js",
+    "publish": "cd dist && npm publish",
+    "example1": "ts-node example/basic1.ts",
+    "example2": "ts-node example/basic2.ts",
+    "example3": "ts-node example/multipleTests.ts"
   },
   "keywords": [],
   "author": "t.sunaga",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.8",
+    "kensajs": "^0.3.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
   "bin": {
-    "kensa": "./runTests.js"
+    "kensa": "./src/runTests.js"
   },
   "repository": {
     "type": "git",

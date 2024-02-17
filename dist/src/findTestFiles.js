@@ -29,12 +29,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.findTestFiles = void 0;
 const path_1 = __importDefault(require("path"));
 const fs = __importStar(require("fs"));
-/**
- * find all files in a directory that match a pattern
- * @param dir target directory
- * @param pattern regex pattern to match
- * @returns
- */
 function findTestFiles(dir, pattern) {
     let results = [];
     fs.readdirSync(dir).forEach((file) => {

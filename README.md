@@ -1,6 +1,9 @@
 # KensaJs
 
-KensaJs is a testing library that prioritizes simplicity, lightness, and ease of use.
+KensaJs is a testing library that prioritizes simplicity, lightness, and ease of use, aiming to provide an optimal tool for JavaScript and TypeScript developers looking to efficiently conduct unit tests.
+Currently, KensaJs focuses on supporting assertions, offering a straightforward approach to validate the outcomes of your tests with precision and clarity. 
+
+**Note:** KensaJs is currently in a test release phase. Please be aware that it may contain bugs. Feedback is highly welcome. If you encounter any issues, feel free to open an issue.
 
 ## Features
 
@@ -16,56 +19,43 @@ npm install kensajs
 ```
 ## Usage
 
+##### Basic
+
 Import and use Kensa from kensajs.
+1. Import Kensa from kensajs, and create a new instance with a title.
+2. Use ks.test() to test your functions.
+3. Use ks.run() to execute your tests.
 
 example
 ```typescript
-// Example test file
-// require or import
+// basic1.ts
 import Kensa from 'kensajs';
 
-// Define your functions
-const testFunction = (a, b) => a + b;
 
-// Create a new instance of Kensa
-const ks = Kensa();
-ks.title('Sample');
+const testFunction = (a:number, b:number) => a + b;
+const ks = Kensa('Basic1 test');
 
-// simple message
-ks.msg('success');
-
-// Test a simple value
 ks.test({
-  title: 'Simple Value Test',
+  title: 'Simple Test (success)',
   input: testFunction(1, 1),
   expect: 2,
 });
 
-// simple message
-ks.msg('failure');
-
-// failure
-ks.test({
-  title: 'failure test Function(1,2) = 2',
-  input: testFunction(1,2),
-  expect: 2,
-});
+ks.run();
 ```
 
 ```bash
-📄 Sample test
-success
-✓ Simple Value Test
-failure
-✗ failure test Function(1,2) = 2  (result: undefined, expected: 2)
+📄 Basic1 test
+✓ Simple Test (success)
 ```
 
 Supports testing of functions, asynchronous functions, and error handling.
 
 ```typescript
+// basic2.ts
 import Kensa from 'kensajs';
 
-const testFunction = (a, b) => a + b;
+const testFunction = () => 4;
 
 const asyncTestFunction = async () => {
   return new Promise((resolve) =>
@@ -77,17 +67,18 @@ const errorTestFunction = () => {
   throw new Error('Test error');
 };
 
-const ks = Kensa();
+const ks = Kensa('Basic2 Test');
+
 // Test a synchronous function
 ks.test({
-  title: 'Synchronous Test Example',
-  input: () => testFunction(2, 2),
+  title: 'Synchronous Test',
+  input: testFunction,
   expect: 4,
 });
 
 // Test an asynchronous function
 ks.test({
-  title: 'Asynchronous Test Example',
+  title: 'Asynchronous Test',
   input: asyncTestFunction,
   expect: 'async result',
 });
@@ -98,20 +89,26 @@ ks.test({
   input: errorTestFunction,
   expect: new Error('Test error'),
 });
+
+ks.run();
 ```
 
 ```bash
+📄 Basic2 Test
+✓ Synchronous Test
+✓ Asynchronous Test
 ✓ Error Expectation Test
-✓ Synchronous Test Example
-✓ Asynchronous Test Example
 ```
 
-However, when including asynchronous functions, the order may change, so if you need to maintain order, you must wait with await.
+##### Multiple Tests
+
+If you want to run multiple tests in the same file, you can use the ks.getRunner() method to manage your tests. This approach allows you to separately control each test set and then execute them collectively.
 
 ```typescript
+// multiple.ts
 import Kensa from 'kensajs';
 
-const testFunction = (a, b) => a + b;
+const testFunction = () => 4;
 
 const asyncTestFunction = async () => {
   return new Promise((resolve) =>
@@ -119,27 +116,55 @@ const asyncTestFunction = async () => {
   );
 };
 
-const ks = Kensa();
-const testing = async () => {
-  // Test an asynchronous function
-  await ks.test({
-    title: 'Asynchronous Test Example',
+const errorTestFunction = () => {
+  throw new Error('Test error');
+};
+
+let ks = Kensa('Advanced Test1');
+
+ks.test({
+  title: 'Synchronous Test1',
+  input: testFunction,
+  expect: 4,
+});
+ks.test({
+  title: 'Asynchronous Test1',
+  input: asyncTestFunction,
+  expect: 'async result',
+});
+
+const runner1 = ks.getRunner();
+
+// Prepare a second test set
+ks = Kensa('Advanced Test2');
+
+ks.test({
+    title: 'Synchronous Test2',
+    input: testFunction,
+    expect: 4,
+  });
+  ks.test({
+    title: 'Asynchronous Test2',
     input: asyncTestFunction,
     expect: 'async result',
   });
-  // Test a synchronous function
-  ks.test({
-    title: 'Synchronous Test Example',
-    input: () => testFunction(2, 2),
-    expect: 4,
-  });
-};
-testing()
-```
 
+const runner2 = ks.getRunner();
+
+// Execute multiple test runners collectively
+ks.run([runner1, runner2]);
+
+```
+  
 ```bash
-✓ Asynchronous Test Example
-✓ Synchronous Test Example
+📄 Advanced Test1
+✓ Synchronous Test1
+✓ Asynchronous Test1
+
+------------------------------------------
+📄 Advanced Test2
+✓ Synchronous Test2
+✓ Asynchronous Test2
 ```
 
 ### Automated
@@ -150,45 +175,59 @@ Add the following to your package.json scripts:
 "test": "kensa"
 ```
 
-Create a .ks.js or .ks.ts file. These files are where you'll write your tests. KensaJs will automatically detect and run these tests when you execute the "test" script.
-If you are running `.ks.ts` files, please install `ts-node`.
+Create  `.ks.js ` or  `.ks.ts ` files, where you'll write your tests. KensaJs will automatically detect and run these tests when you execute the "test" script. To run TypeScript files directly, you will need to install `ts-node`:
 
+```bash
+npm install ts-node --save-dev
+```
+
+1. Create a new instance of Kensa and give it a title.
+2. ks.test() to test your functions.
+3. ks.getRunner() to run your tests.
+4. export the runners.
 
 ```typescript
-// testFunction.ks.ts
-import Kensa from "kensajs";
-import {testFunction} from './testFunction.ts'
+// automated.ks.ts
+import Kensa from 'kensajs';
 
-const ks = Kensa();
+let ks = Kensa('automated Test1');
 
-ks.title('testFunction test');
-
-// success
 ks.test({
-  title: 'testFunction(1,1) = 2',
-  input: testFunction(1,1),
-  expect: 2,
+  title: 'Simple Test',
+  input: () => 5,
+  expect: 5,
 });
 
-// failure
+const runner1 = ks.getRunner();
+
+ks = Kensa('automated Test2');
+
 ks.test({
-  title: 'testFunction(1,2) = 2',
-  input: testFunction(1,2),
-  expect: 2,
+  title: 'Simple Test',
+  input: () => 5,
+  expect: 5,
 });
+
+const runner2 = ks.getRunner();
+
+export { runner1, runner2 };
 ```
 
 ```bash
 > npm run test
 
-📄 Sample test
-✓ testFunction(1,1)
-✗ testFunction(1,2)  (result: 3, expected: 2)
+***************************************************************
+test file: path\automated.ks.ts
+
+***************************************************************
+📄 automated Test1
+✓ Simple Test
+
+------------------------------------------
+📄 automated Test2
+✓ Simple Test
+
 ```
 
-
-License
-
-KensaJs is released under the ISC License.
-
-KensaJs is currently in a test release phase. It may contain bugs. 
+### License
+KensaJs is open source software released under the ISC License. For the full license text, please see the [LICENSE](https://github.com/sunaga104/KensaJs/LICENSE) file in our GitHub repository.

@@ -1,0 +1,43 @@
+---
+title: Welcome to KensaJs
+description: main page of KensaJs
+template: splash
+hero:
+  tagline: KensaJs is a simpl JavaScript Testing Library.
+  image:
+    file: ../../assets/KensaJs.png
+  actions:
+    - text: Get started
+      link: /guides/start/
+      icon: right-arrow
+      variant: primary
+    - text: View on Github
+      link: https://github.com/sunaga104/KensaJs
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+
+## Features
+
+<CardGrid >
+  <Card title="Simple" icon="approve-check">
+    Designed with simplicity in mind, making it easy to write and run tests.
+  </Card>
+  <Card title="Versatile" icon="seti:typescript">
+    Supports testing with regular .js and .ts files, allowing for runtime testing.
+  </Card>
+  <Card title="Automated" icon="seti:powershell">
+    Automatically handles .ks.js | .ks.ts test files.
+  </Card>
+</CardGrid>
+
+## links
+
+<LinkCard
+  title="npm"
+  href="https://www.npmjs.com/package/kensajs"
+/>

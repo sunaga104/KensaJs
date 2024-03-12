@@ -7,52 +7,52 @@ import {
   splitLine,
 } from './message';
 import testMain from './test';
-
-interface KensaInstance {
-  /**
-   * Adds a new test to the Kensa suite.
-   *
-   * @param {Object} params - The parameters for the test.
-   * @param {string} params.title - The title of the test.
-   * @param {any} params.input - The test function or value to be tested.
-   * @param {any} params.expect - The expected result of the test.
-   */
-  test: (params: { title: string; input: any; expect: any }) => void;
-  /**
-   * Runs all tests in the Kensa suite or specified runners if provided.
-   *
-   * @param {Function[]} [runners] - Optional. An array of runner functions to execute instead of the internal test suite.
-   * @returns {Promise<void>} A promise that resolves once all tests have been executed.
-   */
-  run: (runners?: Function[]) => Promise<boolean>;
-  /**
-   * Returns a runner function that, when called, runs all tests in the Kensa suite.
-   *
-   * @returns {Function} A function that runs the test suite when invoked.
-   */
-  getRunner: () => Function;
-}
+import { KensaInstance, KensaStub } from './type';
 
 /**
  * Creates a new Kensa testing instance for managing and running tests.
  *
  * @param {string} kensaTitle - The title for the Kensa test suite.
- * @returns An object containing methods to add tests, run them, and get a runner function.
+ * @returns {KensaInstance} test object
  */
 export default function Kensa(kensaTitle: string): KensaInstance {
+  // testMain object list
   let tests: Array<() => Promise<boolean>> = [];
 
-  function test({
+  function test<T, K extends keyof T>({
     title,
     input,
     expect,
+    stub,
   }: {
     title: string;
     input: any;
     expect: any;
+    stub?: KensaStub<T, K>;
   }) {
-    const testPromise = testMain({ title, input, expect });
+    if (stub && !(input instanceof Function)) {
+      const errorMsg =
+        'Stub tests are only available for functions. If you want to use a stub for a simple value test, you should replace simpleValue with () => simpleValue.';
+      throw new Error(errorMsg);
+    }
+    const testPromise = testMain({ title, input, expect, stub });
     tests.push(testPromise);
+  }
+
+  function stub<T, K extends keyof T>(obj: T, method: K, returnValue: any) {
+    if (!obj || !method) {
+      throw new Error('Invalid arguments for stub function');
+    }
+    if (typeof obj[method] !== 'function') {
+      throw new Error(
+        `'${String(method)}' is not a function on the provided object`
+      );
+    }
+    return {
+      obj,
+      method,
+      returnValue,
+    };
   }
 
   async function run(runners?: Function[]) {
@@ -75,6 +75,7 @@ export default function Kensa(kensaTitle: string): KensaInstance {
 
   return {
     test,
+    stub,
     run,
     getRunner,
   };

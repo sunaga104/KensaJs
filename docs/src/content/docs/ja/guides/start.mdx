@@ -18,7 +18,9 @@ npm install kensajs --save-dev
 import Kensa from 'kensajs';
 import { testFunction } from './testFunction';
 
-const ks = Kensa('テストタイトル');
+const ks = Kensa();
+
+ks.mainTitle('テストタイトル');
 
 ks.test({
   title: 'テスト項目',
@@ -30,7 +32,7 @@ ks.run();
 ```
 
 1. Kensaをインポートします。`import Kensa from 'kensajs';`
-1. `test()`を使用して、テストを追加します。詳しくは [test](/reference/test) を参照してください。
+1. `test()`を使用して、テストを追加します。
 1. `run()`でテストを実行します。
 
 ###### 実行結果
@@ -72,16 +74,12 @@ ks.test({
   expect: 6,
 });
 
-const runner = ks.getRunner();
-export { runner };
+ks.run();
 ```
 
 1. Kensaをインポートします。`import Kensa from 'kensajs';`
-1. `test()`を使用して、テストを追加します。詳しくは [test](/reference/test) を参照してください。
-1. `getRunner()`を使用して、runnerを取得します。
-1. runnerをエクスポートします。
-
-※ 自動化の場合は、`run()`を使用しないでください。
+1. `test()`を使用して、テストを追加します。
+1. `run()`でテストを実行します。
 
 ###### テストの実行
 ```sh

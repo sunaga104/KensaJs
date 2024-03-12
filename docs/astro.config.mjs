@@ -30,19 +30,40 @@ export default defineConfig({
               },
               link: '/guides/start/',
             },
+            {
+              label: 'Title',
+              translations: {
+                ja: 'タイトル',
+              },
+              link: '/guides/title/',
+            },
+            {
+              label: 'Test',
+              translations: {
+                ja: 'テスト',
+              },
+              link: '/guides/test/',
+            },
+            {
+              label: 'Stub',
+              translations: {
+                ja: 'スタブ',
+              },
+              link: '/guides/stub/',
+            },
           ],
         },
-        {
-          label: 'Reference',
-          translations: {
-            ja: 'リファレンス',
-          },
-          items: [
-            { label: 'Kensa', link: '/reference/kensa/' },
-            { label: 'test', link: '/reference/test/' },
-            { label: 'stub', link: '/reference/stub/' },
-          ],
-        },
+        // {
+        //   label: 'Reference',
+        //   translations: {
+        //     ja: 'リファレンス',
+        //   },
+        //   items: [
+        //     { label: 'Kensa', link: '/reference/kensa/' },
+        //     { label: 'test', link: '/reference/test/' },
+        //     { label: 'stub', link: '/reference/stub/' },
+        //   ],
+        // },
       ],
     }),
   ],

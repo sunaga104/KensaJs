@@ -9,20 +9,25 @@
     "prebuild": "npm run clean",
     "build": "tsc && npm run prepare-package && copy README.md dist",
     "test": "npm run test:js & npm run test:ts & npm run kensa",
+    "test:dev": "ts-node src/index.ts",
     "test:js": "node tests/test.js",
     "test:ts": "ts-node tests/test.ts",
+    "test:sinon": "ts-node tests/sinon.ts",
     "kensa": "node dist/src/runTests.js",
     "prepare-package": "node prepare-package-json.js",
     "publish": "cd dist && npm publish",
     "example1": "ts-node example/basic1.ts",
     "example2": "ts-node example/basic2.ts",
-    "example3": "ts-node example/multiple.ts"
+    "example3": "ts-node example/multiple.ts",
+    "serve": "http-server ."
   },
   "keywords": [],
   "author": "t.sunaga",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.8",
+    "@types/sinon": "^17.0.3",
+    "http-server": "^14.1.1",
     "kensajs": "^0.3.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
@@ -33,5 +38,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/sunaga104/KensaJs"
+  },
+  "dependencies": {
+    "sinon": "^17.0.1"
   }
 }

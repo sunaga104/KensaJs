@@ -1,0 +1,171 @@
+---
+title: タイトル
+---
+
+## メインタイトル
+
+`ks.mainTitle('メインタイトル名')` でテストのメインタイトルを設定します。
+
+```typescript
+import Kensa from 'kensajs';
+import { testFunction } from './testFunction';
+
+const ks = Kensa();
+
+ks.mainTitle('メインタイトル');
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.run();
+```
+
+###### 実行結果
+```bash
+📄 メインタイトル
+  ✓  テスト項目
+
+TOTAL: 1, PASS: 1, FAIL: 0
+```
+
+## サブタイトル
+
+`ks.subTitle('サブタイトル名')` でテストのサブタイトルを設定します。
+サブタイトルは自動で採番されます。
+
+```typescript
+import Kensa from 'kensajs';
+import { testFunction } from './testFunction';
+
+const ks = Kensa();
+
+ks.mainTitle('メインタイトル');
+
+ks.subTitle('サブタイトル');
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.subTitle('サブタイトル');
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.run();
+```
+
+###### 実行結果
+```bash
+📄 メインタイトル
+  1. サブタイトル
+    ✓  テスト項目
+  2. サブタイトル
+    ✓  テスト項目
+
+TOTAL: 2, PASS: 2, FAIL: 0
+```
+
+
+`ks.subTitle('サブタイトル名', 階層)`とすることで、
+サブタイトルの階層を設定できます。
+
+```typescript
+import Kensa from 'kensajs';
+import { testFunction } from './testFunction';
+
+const ks = Kensa();
+
+ks.mainTitle('メインタイトル');
+
+ks.subTitle('サブタイトル');
+
+ks.subTitle('サブタイトル', 2);
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.subTitle('サブタイトル', 2);
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.subTitle('サブタイトル');
+
+ks.subTitle('サブタイトル', 2);
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.subTitle('サブタイトル', 2);
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+ks.run();
+```
+
+###### 実行結果
+```bash
+📄 メインタイトル
+  1. サブタイトル
+    1. サブタイトル
+      ✓  テスト項目
+      ✓  テスト項目
+    2. サブタイトル
+      ✓  テスト項目
+      ✓  テスト項目
+  2. サブタイトル
+    1. サブタイトル
+      ✓  テスト項目
+      ✓  テスト項目
+    2. サブタイトル
+      ✓  テスト項目
+      ✓  テスト項目
+
+TOTAL: 8, PASS: 8, FAIL: 0
+```

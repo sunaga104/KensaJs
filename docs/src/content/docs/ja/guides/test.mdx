@@ -1,0 +1,80 @@
+---
+title: テスト
+---
+
+## テストの設定
+
+`ks.test()`を使用してテストを設定します。
+
+```typescript
+ks.test({
+  title: テストタイトル,
+  input: 値 or 関数 or エラー など,
+  expect: 期待値,
+});
+```
+
+### input
+
+`input` には、値 or 関数 or エラー などを指定できます。
+
+```typescript
+import Kensa from 'kensajs';
+import { testFunction } from './testFunction';
+
+const ks = Kensa();
+
+// 値を渡す
+ks.test({
+  title: 'テスト項目',
+  input: 2,
+  expect: 2,
+});
+
+// 関数を実行して値を渡す
+ks.test({
+  title: 'テスト項目',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+// 関数のまま渡す
+ks.test({
+  title: 'テスト項目',
+  input: () => {
+    testFunction(1, 1)
+  },
+  expect: 2,
+});
+
+// 非同期関数を渡す
+ks.test({
+  title: 'テスト項目',
+  input: async () => {
+    await testFunction(1, 1)
+  },
+  expect: 2,
+});
+
+// エラーを渡す
+ks.test({
+  title: 'テスト項目',
+  input: () => {
+    throw new Error('エラー');
+  },
+  expect: new Error('エラー'),
+});
+
+ks.run();
+```
+
+###### 実行結果
+```bash
+✓  テスト項目
+✓  テスト項目
+✓  テスト項目
+✓  テスト項目
+✓  テスト項目
+
+TOTAL: 5, PASS: 5, FAIL: 0
+```

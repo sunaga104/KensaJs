@@ -114,6 +114,7 @@
     "node_modules",
     "tests",
     "example",
-    "./dist"
+    "./dist",
+    "./docs"
   ]
 }

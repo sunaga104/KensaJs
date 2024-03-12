@@ -1,0 +1,16 @@
+{
+  "name": "kensajs",
+  "version": "0.3.7",
+  "description": "A Simple and Intuitive JavaScript Testing Library",
+  "main": "./src/index.js",
+  "keywords": [],
+  "author": "t.sunaga",
+  "license": "ISC",
+  "bin": {
+    "kensa": "./src/runTests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sunaga104/KensaJs"
+  }
+}

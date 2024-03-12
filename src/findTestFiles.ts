@@ -1,5 +1,5 @@
+import path from 'path';
 import * as fs from 'fs';
-import * as path from 'path';
 
 export function findTestFiles(dir: string, pattern: RegExp): string[] {
   let results: string[] = [];

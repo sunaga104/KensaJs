@@ -22,14 +22,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findTestFiles = void 0;
+const path_1 = __importDefault(require("path"));
 const fs = __importStar(require("fs"));
-const path = __importStar(require("path"));
 function findTestFiles(dir, pattern) {
     let results = [];
     fs.readdirSync(dir).forEach((file) => {
-        const fullPath = path.join(dir, file);
+        const fullPath = path_1.default.join(dir, file);
         if (fs.statSync(fullPath).isDirectory()) {
             results = results.concat(findTestFiles(fullPath, pattern));
         }
@@ -40,3 +43,4 @@ function findTestFiles(dir, pattern) {
     return results;
 }
 exports.findTestFiles = findTestFiles;
+//# sourceMappingURL=findTestFiles.js.map

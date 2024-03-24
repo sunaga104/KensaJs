@@ -72,6 +72,20 @@ export interface KensaInstance {
   test: (param: { title: string; input: any; expect: any }) => void;
 
   /**
+   * Stubs a method of an object with a specific return value.
+   *
+   * @param obj - The object to stub.
+   * @param method - The method to stub.
+   * @param returnValue - The return value of the stubbed method.
+   */
+  stub: (obj: any, method: any, returnValue: any) => void;
+
+  /**
+   * Clears all stubs created during the test suite.
+   */
+  clearStub: () => void;
+
+  /**
    * Executes all tests within the test suite.
    */
   run: () => void;

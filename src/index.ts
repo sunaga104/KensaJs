@@ -1,9 +1,8 @@
 import { KensaInstance, TestSuite, TestTool } from './core/type';
 import { runTestsSuite } from './service/runTestsSuite';
 import testMain from './service/testMain';
-import sinon from 'sinon';
 
-export default function Kensa() {
+export default function Kensa(): KensaInstance {
   let testSuite: TestSuite = {
     title: '',
     tests: [] as Array<TestTool>,

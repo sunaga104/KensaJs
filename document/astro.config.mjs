@@ -8,6 +8,7 @@ export const locales = {
 
 // https://astro.build/config
 export default defineConfig({
+  base: '',
   integrations: [
     starlight({
       title: 'KensaJs',

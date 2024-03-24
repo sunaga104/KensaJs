@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.runTestsSuite = void 0;
 const message_1 = require("../infrastructure/log/message");
+const sinon_1 = __importDefault(require("sinon"));
 let queue = Promise.resolve();
 let totalSuiteCount = 0;
 let completedSuiteCount = 0;
@@ -29,6 +33,23 @@ function runTestsSuite(testSuite) {
             return paragraphIndex;
         };
         for (const test of testSuite.tests) {
+            if (test.stub) {
+                const { obj, method, returnValue } = test.stub;
+                if (returnValue instanceof Error) {
+                    sinon_1.default.replace(obj, method, sinon_1.default.fake.throws(returnValue));
+                }
+                else if (method.async) {
+                    sinon_1.default.replace(obj, method, sinon_1.default.fake.resolves(returnValue));
+                }
+                else {
+                    sinon_1.default.replace(obj, method, sinon_1.default.fake.returns(returnValue));
+                }
+                continue;
+            }
+            if (test.clearStub) {
+                sinon_1.default.restore();
+                continue;
+            }
             if (typeof test === 'function') {
                 totalCount++;
                 const result = await test(currentParagraph);

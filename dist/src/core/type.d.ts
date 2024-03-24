@@ -20,7 +20,7 @@ export type Test = (paragraph: number) => Promise<boolean>;
  * The `TestTool` type represents an element within the test suite.
  * It can be either of type `Test` or interface `SubTitle`.
  */
-export type TestTool = Test | SubTitle;
+export type TestTool = Test | SubTitle | any;
 /**
  * The `TestSuite` interface defines the overall structure of a test suite.
  *

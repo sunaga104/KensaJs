@@ -20,6 +20,12 @@ function Kensa() {
         const testPromise = (0, testMain_1.default)({ title, input, expect });
         testSuite.tests.push(testPromise);
     };
+    const stub = (obj, method, returnValue) => {
+        testSuite.tests.push({ stub: { obj, method, returnValue } });
+    };
+    const clearStub = () => {
+        testSuite.tests.push({ clearStub: 'clearStub' });
+    };
     const run = () => {
         (0, runTestsSuite_1.runTestsSuite)(testSuite);
         testSuite = {
@@ -31,6 +37,8 @@ function Kensa() {
         mainTitle,
         subTitle,
         test,
+        stub,
+        clearStub,
         run,
     };
 }

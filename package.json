@@ -1,6 +1,6 @@
 {
   "name": "kensajs",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "A Simple and Intuitive JavaScript Testing Library",
   "main": "./src/index.js",
   "scripts": {

@@ -1,0 +1,80 @@
+---
+title: Testing
+---
+
+## Setting up Tests
+
+Use `ks.test()` to configure tests.
+
+```typescript
+ks.test({
+  title: Test Title,
+  input: Value or Function or Error, etc.,
+  expect: Expected Value,
+});
+```
+
+### input
+
+`input` can be a value, a function, an error, etc.
+
+```typescript
+import Kensa from 'kensajs';
+import { testFunction } from './testFunction';
+
+const ks = Kensa();
+
+// Passing a value
+ks.test({
+  title: 'Test Item',
+  input: 2,
+  expect: 2,
+});
+
+// Executing a function and passing its value
+ks.test({
+  title: 'Test Item',
+  input: testFunction(1, 1),
+  expect: 2,
+});
+
+// Passing the function itself
+ks.test({
+  title: 'Test Item',
+  input: () => {
+    testFunction(1, 1)
+  },
+  expect: 2,
+});
+
+// Passing an asynchronous function
+ks.test({
+  title: 'Test Item',
+  input: async () => {
+    await testFunction(1, 1)
+  },
+  expect: 2,
+});
+
+// Passing an error
+ks.test({
+  title: 'Test Item',
+  input: () => {
+    throw new Error('error');
+  },
+  expect: new Error('error'),
+});
+
+ks.run();
+```
+
+###### 実行結果
+```bash
+✓  Test Item
+✓  Test Item
+✓  Test Item
+✓  Test Item
+✓  Test Item
+
+TOTAL: 5, PASS: 5, FAIL: 0
+```

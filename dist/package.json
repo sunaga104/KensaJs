@@ -12,5 +12,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/sunaga104/KensaJs"
+  },
+  "dependencies": {
+    "sinon": "^17.0.1"
   }
 }

@@ -98,5 +98,7 @@ npm run test
 TOTAL: 1, PASS: 1, FAIL: 0
 ```
 
+more information, please see the [documentation](https://sunaga104.github.io/KensaJs/).
+
 ### License
 KensaJs is open source software released under the ISC License. For the full license text, please see the [LICENSE](https://github.com/sunaga104/KensaJs/blob/main/LICENSE) file in our GitHub repository.

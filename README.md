@@ -70,7 +70,7 @@ The creation method is as follows:
 ```typescript
 import Kensa from 'kensajs';
 
-let ks = Kensa('Test Title');
+let ks = Kensa();
 
 ks.test({
   title: 'Test Item',

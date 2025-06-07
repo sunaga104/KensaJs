@@ -115,6 +115,8 @@
     "tests",
     "example",
     "./dist",
-    "./docs"
+    "./docs",
+    "**/*.test.ts",
+    "**/__tests__"
   ]
 }

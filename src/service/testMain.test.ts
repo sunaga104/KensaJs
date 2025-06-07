@@ -1,16 +1,12 @@
 import testMain from './testMain';
-import { failureLog, successLog } from '../infrastructure/log/message';
+import * as message from '../infrastructure/log/message';
 
 jest.mock('../infrastructure/log/message', () => ({
   failureLog: jest.fn(),
   successLog: jest.fn(),
 }));
 
-let message: any;
-
 beforeEach(() => {
-  jest.resetModules();
-  message = require('../infrastructure/log/message');
   jest.clearAllMocks();
 });
 

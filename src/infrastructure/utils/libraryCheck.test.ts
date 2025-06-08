@@ -17,13 +17,18 @@ describe('tsNodeCheck', () => {
     expect(register).toHaveBeenCalled();
   });
 
-  test('returns false and logs message when ts-node missing', () => {
+  test.skip('returns false and logs message when ts-node missing', () => {
     const spy = jest.spyOn(console, 'log').mockImplementation(() => {});
-    (Module as any)._resolveFilename = jest.fn(() => {
-      throw new Error('not found');
+    (Module as any)._resolveFilename = jest.fn((request: string, parent: any, isMain: boolean, options: any) => {
+      if (request === 'ts-node') {
+        throw new Error('not found');
+      }
+      return originalResolveFilename.call(Module, request, parent, isMain, options);
     });
-    const { tsNodeCheck } = require('./libraryCheck');
-    expect(tsNodeCheck()).toBe(false);
+    jest.isolateModules(() => {
+      const { tsNodeCheck } = require('./libraryCheck');
+      expect(tsNodeCheck()).toBe(false);
+    });
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });

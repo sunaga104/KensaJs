@@ -11,7 +11,6 @@ describe('runTests script', () => {
   const origArgv = process.argv;
   afterEach(() => {
     process.argv = origArgv;
-    jest.resetModules();
     jest.clearAllMocks();
   });
 

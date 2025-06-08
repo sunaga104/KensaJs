@@ -9,6 +9,7 @@
     "prebuild": "npm run clean",
     "build": "tsc && npm run prepare-package && copy README.md dist",
     "test": "npm run test:js & npm run test:ts & npm run kensa",
+    "test:jest": "jest",
     "test:dev": "ts-node src/index.ts",
     "test:js": "node tests/test.js",
     "test:ts": "ts-node tests/test.ts",
@@ -19,8 +20,7 @@
     "example1": "ts-node example/basic1.ts",
     "example2": "ts-node example/basic2.ts",
     "example3": "ts-node example/multiple.ts",
-    "serve": "http-server .",
-    "test:jest": "jest"
+    "serve": "http-server ."
   },
   "keywords": [],
   "author": "t.sunaga",

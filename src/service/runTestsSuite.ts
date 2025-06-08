@@ -52,9 +52,12 @@ export function runTestsSuite(testSuite: TestSuite) {
     for (const test of testSuite.tests) {
       if (test.stub) {
         const { obj, method, returnValue } = test.stub;
+        const targetFn = typeof method === 'string' ? obj[method] : method;
+        const isAsync =
+          targetFn && targetFn.constructor && targetFn.constructor.name === 'AsyncFunction';
         if (returnValue instanceof Error) {
           sinon.replace(obj, method, sinon.fake.throws(returnValue) as any);
-        } else if (method.async) {
+        } else if (isAsync) {
           sinon.replace(obj, method, sinon.fake.resolves(returnValue) as any);
         } else {
           sinon.replace(obj, method, sinon.fake.returns(returnValue) as any);
@@ -90,4 +93,12 @@ export function runTestsSuite(testSuite: TestSuite) {
       space();
     }
   });
+}
+
+// runTestsSuiteのグローバルカウンタをリセットするための関数を追加
+export function resetRunTestsSuiteCounters() {
+  totalSuiteCount = 0;
+  completedSuiteCount = 0;
+  allSuccessCount = 0;
+  allFailureCount = 0;
 }

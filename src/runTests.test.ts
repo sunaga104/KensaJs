@@ -1,4 +1,5 @@
 import { findTestFiles } from './infrastructure/file/findTestFiles';
+import path from 'path';
 import { displayStartMsg } from './infrastructure/log/message';
 import { tsNodeCheck } from './infrastructure/utils/libraryCheck';
 
@@ -31,7 +32,7 @@ describe('runTests script', () => {
     jest.isolateModules(() => {
       require('./runTests');
     });
-    expect(findTestFiles).toHaveBeenCalledWith('/tmp', /\.ks\.(ts|js)$/);
+    expect(findTestFiles).toHaveBeenCalledWith(path.resolve('/tmp'), /\.ks\.(ts|js)$/);
     expect((global as any).__loaded).toBe(true);
     expect(displayStartMsg).toHaveBeenCalled();
   });
@@ -43,6 +44,6 @@ describe('runTests script', () => {
     jest.isolateModules(() => {
       require('./runTests');
     });
-    expect(findTestFiles).toHaveBeenCalledWith('/path', /\.ks\.js$/);
+    expect(findTestFiles).toHaveBeenCalledWith(path.resolve('/path'), /\.ks\.js$/);
   });
 });

@@ -1,26 +1,28 @@
-import { tsNodeCheck } from './libraryCheck';
+import Module from 'module';
 
 describe('tsNodeCheck', () => {
-  const originalResolve = require.resolve;
+  const originalResolveFilename = (Module as any)._resolveFilename;
   afterEach(() => {
-    require.resolve = originalResolve;
+    (Module as any)._resolveFilename = originalResolveFilename;
     jest.resetModules();
+    jest.clearAllMocks();
   });
 
   test('returns true when ts-node present', () => {
     const register = jest.fn();
-    jest.mock('ts-node', () => ({ register }), { virtual: true });
-    require.resolve = jest.fn() as unknown as typeof require.resolve;
+    jest.doMock('ts-node', () => ({ register }), { virtual: true });
+    (Module as any)._resolveFilename = jest.fn(() => 'ts-node.js');
+    const { tsNodeCheck } = require('./libraryCheck');
     expect(tsNodeCheck()).toBe(true);
     expect(register).toHaveBeenCalled();
   });
 
   test('returns false and logs message when ts-node missing', () => {
     const spy = jest.spyOn(console, 'log').mockImplementation(() => {});
-    require.resolve = jest
-      .fn(() => {
-        throw new Error('not found');
-      }) as unknown as typeof require.resolve;
+    (Module as any)._resolveFilename = jest.fn(() => {
+      throw new Error('not found');
+    });
+    const { tsNodeCheck } = require('./libraryCheck');
     expect(tsNodeCheck()).toBe(false);
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();

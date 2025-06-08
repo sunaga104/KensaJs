@@ -12,7 +12,7 @@ const basePath: string = process.argv[2]
 console.log(`Searching for .ks.(ts|js) files in: ${basePath}`);
 
 const filePattern = tsNodeAvailable ? /\.ks\.(ts|js)$/ : /\.ks\.js$/;
-const testFiles = findTestFiles(basePath, filePattern);
+const testFiles = findTestFiles(basePath, filePattern) || [];
 console.log(testFiles);
 
 displayStartMsg();

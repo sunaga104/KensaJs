@@ -15,6 +15,7 @@ describe('message logging', () => {
       yellow: jest.fn().mockReturnThis(),
       bgGreen: jest.fn().mockReturnThis(),
       bgRed: jest.fn().mockReturnThis(),
+      white: jest.fn().mockReturnThis(),
       build: mockBuild,
       log: jest.fn(),
     };

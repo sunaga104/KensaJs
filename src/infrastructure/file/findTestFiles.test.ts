@@ -1,9 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import os from 'os';
 import { findTestFiles } from './findTestFiles';
 
 describe('findTestFiles', () => {
-  const tempDir = fs.mkdtempSync(path.join(fs.mkdtempSync('/tmp/ftf'), 'dir'));
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ftf-'));
   beforeAll(() => {
     fs.mkdirSync(path.join(tempDir, 'sub'));
     fs.writeFileSync(path.join(tempDir, 'a.ks.ts'), '');

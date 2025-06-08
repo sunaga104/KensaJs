@@ -19,7 +19,14 @@ describe('runTests script', () => {
     const file = '/tmp/test.ks.ts';
     (findTestFiles as jest.Mock).mockReturnValue([file]);
     (global as any).__loaded = false;
-    jest.mock(file, () => { (global as any).__loaded = true; }, { virtual: true });
+    jest.doMock(
+      file,
+      () => {
+        (global as any).__loaded = true;
+        return {};
+      },
+      { virtual: true }
+    );
     process.argv = ['node', 'runTests.ts', '/tmp'];
     jest.isolateModules(() => {
       require('./runTests');

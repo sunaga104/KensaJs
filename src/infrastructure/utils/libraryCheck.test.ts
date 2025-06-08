@@ -10,14 +10,17 @@ describe('tsNodeCheck', () => {
   test('returns true when ts-node present', () => {
     const register = jest.fn();
     jest.mock('ts-node', () => ({ register }), { virtual: true });
-    require.resolve = jest.fn();
+    require.resolve = jest.fn() as unknown as typeof require.resolve;
     expect(tsNodeCheck()).toBe(true);
     expect(register).toHaveBeenCalled();
   });
 
   test('returns false and logs message when ts-node missing', () => {
     const spy = jest.spyOn(console, 'log').mockImplementation(() => {});
-    require.resolve = jest.fn(() => { throw new Error('not found'); });
+    require.resolve = jest
+      .fn(() => {
+        throw new Error('not found');
+      }) as unknown as typeof require.resolve;
     expect(tsNodeCheck()).toBe(false);
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
